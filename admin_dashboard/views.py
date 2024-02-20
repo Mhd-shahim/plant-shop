@@ -1,12 +1,18 @@
 from django.shortcuts import render,get_object_or_404
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,authentication_classes, permission_classes
 from rest_framework.response import Response
 from .models import Banner,Category,Plant
 from .serializers import BannerSerializer,CategorySerializer,PlantSerializer
 from rest_framework import status
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 # Create your views here.
 @api_view(['GET', 'POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+
 def banners(request):
 
     if request.method == 'GET':
