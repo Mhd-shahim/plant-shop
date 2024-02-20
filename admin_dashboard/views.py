@@ -5,14 +5,13 @@ from .models import Banner,Category,Plant
 from .serializers import BannerSerializer,CategorySerializer,PlantSerializer
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 
 # Create your views here.
 @api_view(['GET', 'POST'])
 @authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-
+@permission_classes([IsAuthenticated,IsAdminUser])
 def banners(request):
 
     if request.method == 'GET':
@@ -31,6 +30,8 @@ def banners(request):
 
 
 @api_view(['GET','PUT', 'DELETE'])        
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated,IsAdminUser])
 def bannerMethod(request,pk):
     banner = get_object_or_404(Banner, pk=pk)
 
@@ -53,6 +54,8 @@ def bannerMethod(request,pk):
 
 
 @api_view(['GET', 'POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated,IsAdminUser])
 def category(request):
 
     if request.method == 'GET':
@@ -71,7 +74,9 @@ def category(request):
 
 
 
-@api_view(['GET','PUT', 'DELETE'])        
+@api_view(['GET','PUT', 'DELETE'])   
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated,IsAdminUser])
 def categoryMethod(request,pk):
     category = get_object_or_404(Category, pk=pk)
 
@@ -94,6 +99,8 @@ def categoryMethod(request,pk):
     
 
 @api_view(['GET','POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated,IsAdminUser])
 def plants(request):
 
     if request.method == 'GET':
@@ -112,6 +119,8 @@ def plants(request):
         
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated,IsAdminUser])
 def plantMethod(request, pk):
     plant = get_object_or_404(Plant, pk=pk)
 
