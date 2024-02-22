@@ -2,6 +2,7 @@ from django.urls import path
 from admin_dashboard import views
 from admin_dashboard.admin_authentication import adminLogin
 from plant_main import cart
+from plant_main.user_authentication import registerUser,loginUser,logoutUser
 
 urlpatterns = [
     #admin-authentication
@@ -14,6 +15,11 @@ urlpatterns = [
     path('category/<int:pk>', views.categoryMethod, name='category_methods'),
     path('plants', views.plants, name='plants'),
     path('plants/<int:pk>', views.plantMethod, name='plant_method'),
+
+    #user-authentication
+    path('user-register', registerUser, name='user_registration'),
+    path('user-login', loginUser, name='user-login'),
+    path('user-logout', logoutUser, name='user-logout'),
 
     #add-to-cart
     path('add-to-cart', cart.add_to_cart, name='add_to_cart')
