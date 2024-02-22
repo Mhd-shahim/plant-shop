@@ -21,6 +21,7 @@ urlpatterns = [
     path('user-login', loginUser, name='user-login'),
     path('user-logout', logoutUser, name='user-logout'),
 
-    #add-to-cart
-    path('add-to-cart', cart.add_to_cart, name='add_to_cart')
+    #cart
+    path('add-to-cart', cart.add_to_cart, name='add_to_cart'),
+    path('view-cart', cart.viewCart, name='cart-list')
 ]
