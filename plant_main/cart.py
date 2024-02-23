@@ -18,8 +18,6 @@ def add_to_cart(request):
 
     try:
         plant_in_cart = Cart.objects.get(user=user, plant_id=plant_id)
-        #plant_in_cart.quantity += quantity
-        #plant_in_cart.save()
         return Response({'message':'product already in cart'})
     except Cart.DoesNotExist:
         Cart.objects.create(user=user, plant_id=plant_id, quantity=quantity)
@@ -33,3 +31,12 @@ def viewCart(request):
         cart_items = Cart.objects.filter(user=request.user)
         serializer = CartSerializer(cart_items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+@api_view(['POST'])
+def deleteCart(request,pk):
+    if request.method == 'POST':
+        cart_item = Cart.objects.get(user=request.user, plant_id=pk)
+        print(cart_item)
+        cart_item.delete()
+        return Response({'message':'item deleted successfully'}, status=status.HTTP_204_NO_CONTENT)

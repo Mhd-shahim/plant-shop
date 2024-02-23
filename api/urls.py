@@ -23,5 +23,6 @@ urlpatterns = [
 
     #cart
     path('add-to-cart', cart.add_to_cart, name='add_to_cart'),
-    path('view-cart', cart.viewCart, name='cart-list')
+    path('view-cart', cart.viewCart, name='cart-list'),
+    path('delete-cart-item/<int:pk>', cart.deleteCart, name='cart_item_delete')
 ]
