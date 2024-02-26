@@ -32,6 +32,15 @@ class Plant(models.Model):
     def __str__(self):
         return self.name
     
+
+class Testmonial(models.Model):
+    name = models.CharField(max_length=255)
+    job = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/')
+    feedback = models.TextField()
+
+    def __str__(self):
+        return self.name
     
 
 
@@ -58,6 +67,12 @@ def delete_plant_image(sender, instance, **kwargs):
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
 
+@receiver(post_delete, sender=Testmonial)
+def delete_testimonial_image(sender, instance, **kwargs):
+    
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 #delete old image while the image field of an instance is changed
             
@@ -85,5 +100,14 @@ def delete_old_plant_image(sender, instance, **kwargs):
         old_plant = Plant.objects.get(pk=instance.pk)
         if old_plant.image != instance.image: 
             old_image_path = old_plant.image.path
+            if os.path.exists(old_image_path):
+                os.remove(old_image_path)
+
+@receiver(pre_save, sender=Testmonial)
+def delete_old_testimonial_image(sender, instance, **kwargs):
+    if instance.pk: 
+        old_testimonial = Testmonial.objects.get(pk=instance.pk)
+        if old_testimonial.image != instance.image: 
+            old_image_path = old_testimonial.image.path
             if os.path.exists(old_image_path):
                 os.remove(old_image_path)
